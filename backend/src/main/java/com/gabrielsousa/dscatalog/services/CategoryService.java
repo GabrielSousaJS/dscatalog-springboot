@@ -3,8 +3,11 @@ package com.gabrielsousa.dscatalog.services;
 import com.gabrielsousa.dscatalog.dto.CategoryDTO;
 import com.gabrielsousa.dscatalog.entities.Category;
 import com.gabrielsousa.dscatalog.repositories.CategoryRepository;
+import com.gabrielsousa.dscatalog.services.exceptions.DatabaseException;
 import com.gabrielsousa.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,7 +51,17 @@ public class CategoryService {
             repository.save(entity);
             return new CategoryDTO(entity);
         } catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Id not found");
+            throw new ResourceNotFoundException("Id " + id + " not found to update");
+        }
+    }
+
+    public void deleteById(Long id) {
+        try {
+            repository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Id " + id + " not found to delete");
+        } catch (DataAccessException e) {
+            throw new DatabaseException("Integraty violation");
         }
     }
 }

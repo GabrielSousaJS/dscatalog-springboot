@@ -1,7 +1,6 @@
 package com.gabrielsousa.dscatalog.resources;
 
 import com.gabrielsousa.dscatalog.dto.CategoryDTO;
-import com.gabrielsousa.dscatalog.entities.Category;
 import com.gabrielsousa.dscatalog.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,5 +40,11 @@ public class CategoryResource {
     public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @RequestBody CategoryDTO dto) {
         dto = service.update(id, dto);
         return ResponseEntity.ok().body(dto);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

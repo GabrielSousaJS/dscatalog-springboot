@@ -4,8 +4,7 @@ import com.gabrielsousa.dscatalog.dto.ProductDTO;
 import com.gabrielsousa.dscatalog.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -20,12 +19,8 @@ public class ProductResource {
     private ProductService service;
 
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAllPaged(@RequestParam(name = "page") Integer page,
-                                                         @RequestParam(name = "linesPerPage") Integer linesPerPage,
-                                                         @RequestParam(name = "direction") String direction,
-                                                         @RequestParam(name = "orderBy") String orderBy) {
-        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
-        Page<ProductDTO> list = service.findAllPaged(pageRequest);
+    public ResponseEntity<Page<ProductDTO>> findAllPaged(Pageable pageable) {
+        Page<ProductDTO> list = service.findAllPaged(pageable);
         return ResponseEntity.ok().body(list);
     }
 

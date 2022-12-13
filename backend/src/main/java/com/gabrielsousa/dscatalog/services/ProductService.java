@@ -9,6 +9,8 @@ import com.gabrielsousa.dscatalog.repositories.ProductRepository;
 import com.gabrielsousa.dscatalog.services.exceptions.DatabaseException;
 import com.gabrielsousa.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -62,9 +64,9 @@ public class ProductService {
     public void deleteById(Long id) {
         try {
             repository.deleteById(id);
-        } catch (EntityNotFoundException e) {
+        } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException("Id " + id + " not found to delete");
-        } catch (DatabaseException e) {
+        } catch (DataIntegrityViolationException e) {
             throw new DatabaseException("Integraty violation");
         }
     }

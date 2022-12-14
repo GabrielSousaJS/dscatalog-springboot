@@ -2,6 +2,8 @@ package com.gabrielsousa.dscatalog.dto;
 
 import com.gabrielsousa.dscatalog.entities.User;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -12,8 +14,14 @@ public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
+    @NotBlank(message = "Preencha o campo requerido")
     private String firstName;
+
+    @NotBlank(message = "Preencha o campo requerido")
     private String lastName;
+
+    @Email
     private String email;
 
     private Set<RoleDTO> roles = new HashSet<>();

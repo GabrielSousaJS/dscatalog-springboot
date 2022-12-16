@@ -1,5 +1,7 @@
 package com.gabrielsousa.dscatalog.entities;
 
+import com.gabrielsousa.dscatalog.services.validation.UserInsertValid;
+
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;

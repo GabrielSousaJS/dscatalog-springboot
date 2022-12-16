@@ -1,7 +1,10 @@
 package com.gabrielsousa.dscatalog.dto;
 
+import com.gabrielsousa.dscatalog.services.validation.UserInsertValid;
+
 import javax.validation.constraints.NotBlank;
 
+@UserInsertValid
 public class UserInsertDTO extends UserDTO {
 
     @NotBlank

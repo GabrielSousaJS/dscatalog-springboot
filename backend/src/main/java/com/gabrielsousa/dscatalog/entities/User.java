@@ -1,6 +1,5 @@
 package com.gabrielsousa.dscatalog.entities;
 
-import com.gabrielsousa.dscatalog.services.validation.UserInsertValid;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

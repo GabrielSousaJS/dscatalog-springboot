@@ -3,10 +3,7 @@ package com.gabrielsousa.dscatalog.dto;
 import com.gabrielsousa.dscatalog.entities.Category;
 import com.gabrielsousa.dscatalog.entities.Product;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -18,7 +15,7 @@ public class ProductDTO implements Serializable {
 
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Campo requerido")
     @Size(min = 5, max = 60, message = "Mínimo de caracteres 5 e o máximo de 60")
     private String name;
 
@@ -32,6 +29,7 @@ public class ProductDTO implements Serializable {
     @PastOrPresent(message = "A data do produto não pode ser futura")
     private Instant moment;
 
+    @NotEmpty(message = "Produto sem categoria não é permito")
     List<CategoryDTO> categories = new ArrayList<>();
 
     public ProductDTO() {

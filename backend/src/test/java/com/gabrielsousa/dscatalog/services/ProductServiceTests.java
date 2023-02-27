@@ -70,6 +70,8 @@ public class ProductServiceTests {
         when(productRepository.findById(existingId)).thenReturn(Optional.of(product));
         when(productRepository.findById(nonExistingId)).thenReturn(Optional.empty());
 
+        when(productRepository.find(any(), any(), any())).thenReturn(page);
+
         // Get reference by id
         when(productRepository.getReferenceById(existingId)).thenReturn(product);
         when(productRepository.getReferenceById(nonExistingId)).thenThrow(EntityNotFoundException.class);
@@ -88,11 +90,9 @@ public class ProductServiceTests {
     public void findAllPagedShouldReturnPage() {
         Pageable pageable = PageRequest.of(0, 10);
 
-        Page<ProductDTO> result = service.findAllPaged(pageable);
+        Page<ProductDTO> result = service.findAllPaged(0L, "", pageable);
 
         Assertions.assertNotNull(result);
-
-        verify(productRepository, times(1)).findAll(pageable);
     }
 
     @Test

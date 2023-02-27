@@ -20,6 +20,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -33,8 +34,9 @@ public class ProductService {
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAllPaged(Long categoryId, String name, Pageable pageable) {
         List<Category> categories = (categoryId == 0) ? null : Arrays.asList(categoryRepository.getReferenceById(categoryId));
-        Page<Product> list = repository.find(categories, name, pageable);
-        return list.map(x -> new ProductDTO(x));
+        Page<Product> page = repository.find(categories, name, pageable);
+        repository.findProductWithCategory(page.stream().collect(Collectors.toList()));
+        return page.map(x -> new ProductDTO(x, x.getCategories()));
     }
 
     @Transactional(readOnly = true)
